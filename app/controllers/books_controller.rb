@@ -3,7 +3,7 @@ before_action :is_matching_login_user, only: [:edit, :update]
 
   def show
     @book = Book.find(params[:id])
-    @user = current_user
+    @user = @book.user
     @books = @user.books
 
   end
@@ -53,7 +53,7 @@ before_action :is_matching_login_user, only: [:edit, :update]
   def book_params
     params.require(:book).permit(:title, :body)
   end
-  
+
   def is_matching_login_user
     user = Book.find(params[:id]).user
     unless user.id == current_user.id
